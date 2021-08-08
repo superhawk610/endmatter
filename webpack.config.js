@@ -1,4 +1,5 @@
 const path = require('path');
+const EnvironmentPlugin = require('webpack').EnvironmentPlugin;
 const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const HtmlInlineScriptPlugin = require('html-inline-script-webpack-plugin');
@@ -34,6 +35,7 @@ module.exports = {
     ],
   },
   plugins: [
+    new EnvironmentPlugin({ NODE_ENV: 'development' }),
     new ForkTsCheckerWebpackPlugin(),
     new MiniCssExtractPlugin({
       filename: '[name].css',
@@ -41,6 +43,12 @@ module.exports = {
     }),
     new CssMinimizerPlugin(),
     new HtmlWebpackPlugin({ template: './src/index.html', inject: 'body' }),
+    !prod &&
+      new HtmlWebpackPlugin({
+        filename: 'dev.html',
+        template: './src/dev.html',
+        inject: 'body',
+      }),
     prod && new HtmlInlineScriptPlugin([/main.js/]),
     prod && new HtmlInlineCSSPlugin(),
     new TwineFormatPlugin({

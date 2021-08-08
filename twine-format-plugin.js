@@ -22,6 +22,9 @@ class TwineFormatPlugin {
       HtmlWebpackPlugin.getHooks(compilation).beforeEmit.tap(
         pluginName,
         data => {
+          // only generate for main HTML
+          if (data.plugin.options.filename !== 'index.html') return;
+
           // generate a Twine `format.js` file and output it
           const format = { ...this.config, source: data.html };
           const json = JSON.stringify(format, null, 2);

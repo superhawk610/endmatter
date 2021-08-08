@@ -24,6 +24,7 @@ This will be exported as:
 ```json
 {
   "pid": 1,
+  "name": "doorway",
   "text": "You enter a dark room, lit only by lamps on either side.\n\nWhat do you do?",
   "links": [
     { "pid": 2, "name": "Venture forth", "link": "foyer" },
@@ -73,7 +74,7 @@ publish.
 git worktree add gh-pages gh-pages
 cd gh-pages
 cp ../dist/format.js .
-git add --all
+git add format.js
 git commit 'updated format.js'
 git push
 ```
