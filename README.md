@@ -47,7 +47,10 @@ Endmatter supports a very lightweight version of YAML:
 ## Usage
 
 To add this to Twine, add a story format that points to
-`https://superhawk610.github.io/endmatter/format.js`.
+
+```plain
+https://superhawk610.github.io/endmatter/format.js
+```
 
 ## Development
 
