@@ -82,6 +82,11 @@ git commit 'updated format.js'
 git push
 ```
 
+## Special Thanks
+
+This format was heavily inspired by the awesome [lazerwalker/twison](https://github.com/lazerwalker/twison),
+make sure to check it out.
+
 ## License
 
 (c) 2021 Aaron Ross. All rights reserved.
