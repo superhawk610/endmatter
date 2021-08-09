@@ -74,7 +74,7 @@ to generate `dist/format.js`. Add it to the `gh-pages` branch and push to
 publish.
 
 ```sh
-git worktree add gh-pages gh-pages
+git worktree add gh-pages
 cd gh-pages
 cp ../dist/format.js .
 git add format.js
