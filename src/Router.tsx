@@ -5,6 +5,7 @@ import React, {
   useContext,
   useState,
   useEffect,
+  useRef,
 } from 'react';
 
 export interface RouterContext {
@@ -20,16 +21,47 @@ export function useRouter() {
 }
 
 export function RouterProvider({ children }: { children?: any }) {
-  const [hash, setHash] = useState(window.location.hash);
+  const prefixRef = useRef('');
+  const [hash, setHash] = useState(() => {
+    // since we're working inside of Twine's hash router, we have to take
+    // care to preseve whatever routing prefix they've already set up
+    const hash = window.location.hash.slice(1);
+
+    const secondHashIndex = hash.indexOf('#');
+    if (secondHashIndex > -1) {
+      // if we've already performed some navigation, there will be a second #
+      prefixRef.current = hash.slice(0, secondHashIndex);
+      return hash.slice(secondHashIndex + 1);
+    } else {
+      // otherwise, store the whole hash as the prefix
+      prefixRef.current = hash;
+      return '';
+    }
+  });
 
   const navigateTo = (newHash: string) => {
     setHash(newHash);
-    window.history.pushState(null, document.title, `#${newHash}`);
+    window.history.pushState(
+      null,
+      document.title,
+      `#${prefixRef.current}#${newHash}`
+    );
   };
 
   useEffect(() => {
-    // remove leading '#'
-    const handler = (e: any) => setHash(e.target.location.hash.slice(1));
+    const handler = (e: any) => {
+      // remove leading '#'
+      const hash = e.target.location.hash.slice(1);
+
+      const secondHashIndex = hash.indexOf('#');
+      if (secondHashIndex > -1) {
+        // we're still inside our own hash router
+        setHash(hash.slice(secondHashIndex + 1));
+      } else {
+        // we've moved into Twine's router, so reset our hash
+        setHash('');
+      }
+    };
 
     window.addEventListener('popstate', handler);
     return () => window.removeEventListener('popstate', handler);
@@ -52,7 +84,7 @@ export function Router({ children }: { children?: any }) {
 
   let matches = null;
   let activeRoute: any | null = null;
-  React.Children.forEach(children, child => {
+  Children.forEach(children, child => {
     if (activeRoute || !isValidElement(child)) {
       return;
     }
