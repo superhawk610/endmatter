@@ -3,8 +3,11 @@
 Endmatter is a story format for [Twine 2](http://twinery.org/2) that's aimed at
 simple JSON exports and supports passage-level meta styled after frontmatter
 used by content systems like [Gatsby](https://www.gatsbyjs.com/docs/mdx/writing-pages/)
-and [Jekyll](https://jekyllrb.com/docs/front-matter/). Here's what a simple
-passage looks like:
+and [Jekyll](https://jekyllrb.com/docs/front-matter/).
+
+![editor screenshot](./images/story.png)
+
+Here's what a simple passage looks like:
 
 ```plain
 You enter a dark room, lit only by lamps on either side.
