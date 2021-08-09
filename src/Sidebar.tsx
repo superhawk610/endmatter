@@ -1,5 +1,6 @@
 import React from 'react';
 import { useAppContext } from './AppContext';
+import { useRouter } from './Router';
 
 function download(filename: string, contents: string, mimeType = 'text/plain') {
   const el = document.createElement('a');
@@ -16,6 +17,7 @@ function download(filename: string, contents: string, mimeType = 'text/plain') {
 
 export function Sidebar() {
   const { twine, story } = useAppContext();
+  const { navigateTo } = useRouter();
 
   const downloadJSON = () =>
     download(
@@ -27,6 +29,10 @@ export function Sidebar() {
   const downloadTwine = () =>
     download(`${story.name || 'story'}.html`, twine.outerHTML, 'text/html');
 
+  const playStory = () => navigateTo('story');
+
+  const viewJSON = () => navigateTo('json');
+
   let devButton = null;
   if (process.env.NODE_ENV !== 'production') {
     if (!window.location.href.match(/dev/)) {
@@ -37,7 +43,7 @@ export function Sidebar() {
             content, click the button below.
           </p>
           <button
-            style={{ background: 'red', color: 'white' }}
+            className="red"
             onClick={() => (window.location.href = '/dev.html')}
           >
             Dev Example
@@ -50,9 +56,25 @@ export function Sidebar() {
 
   return (
     <div className="sidebar">
+      <p className="header">endmatter &middot;&middot;&middot;</p>
+      <p className="story-title">
+        <span style={{ opacity: 0.7 }}>viewing</span>{' '}
+        {story?.name || <em>untitled</em>}
+      </p>
       {devButton}
       <button onClick={downloadJSON}>Download JSON</button>
       <button onClick={downloadTwine}>Download Twine</button>
+      <p style={{ fontSize: '0.8rem', opacity: 0.5, textAlign: 'center' }}>
+        JSON is used by the game engine, while Twine is used to import into the
+        story editor (you might need both).
+      </p>
+      <div style={{ height: '1rem' }} />
+      <button className="gray" onClick={playStory}>
+        Play Story
+      </button>
+      <button className="gray" onClick={viewJSON}>
+        View JSON
+      </button>
     </div>
   );
 }

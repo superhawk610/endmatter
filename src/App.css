@@ -4,7 +4,7 @@
   box-sizing: border-box;
 }
 
-html, body {
+html, body, p {
   margin: 0;
   padding: 0;
   font-family: BlinkMacSystemFont, -apple-system, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", "Helvetica", "Arial", sans-serif;
@@ -12,7 +12,7 @@ html, body {
 
 /* app styles */
 
-#root {
+body {
   background: #222;
   color: #fff;
 }
@@ -39,6 +39,16 @@ button:hover {
   background: #0087d6;
 }
 
+button.red {
+  background: #f00;
+  color: #fff;
+}
+
+button.gray {
+  background: #333;
+  color: #eee;
+}
+
 .sidebar {
   background: #111;
   padding: 1rem;
@@ -50,20 +60,45 @@ button:hover {
   justify-content: flex-start;
 }
 
-.document-container {
+.sidebar .header {
+  font-size: 1.1rem;
+  color: #444;
+  text-align: center;
+  width: 100%;
+  margin-top: 1rem;
+}
+
+.sidebar .story-title {
+  color: #888;
+  text-align: center;
+  width: 100%;
+  margin: -0.25rem 0 1rem 0;
+}
+
+.container {
   display: flex;
   align-items: stretch;
   justify-content: center;
   overflow-y: auto;
 }
 
-.document-container .document {
+.container .document,
+.container .story {
   background: #333;
   color: #eee;
   padding: 1rem;
+  overflow-x: auto;
+  border-radius: 4px;
+}
+
+.container .document {
   width: 100%;
   max-width: 1000px;
   font-family: 'Dank Mono', 'Fira Code', 'Consolas', monospace;
-  overflow-x: auto;
-  border-radius: 4px;
+}
+
+.container .story {
+  margin-top: 2rem;
+  min-height: 200px;
+  width: 500px;
 }
